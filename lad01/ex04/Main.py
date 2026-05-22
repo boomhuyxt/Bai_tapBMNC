@@ -65,6 +65,8 @@ while True:
         else:
             print("\nDanh sach sinh vien rong")
     elif choice == "0":
+        print ("\nban da chon thoat chuong trinh")
         break
     else:
-        print("Lua chon khong hop le")
+        print("\nKhong co chuc nang nay!")
+        print("\nHay chon chuc nang trong hop menu.")
