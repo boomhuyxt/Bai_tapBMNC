@@ -7,28 +7,30 @@ from cipher.playfair import PlayFairCipher
 
 app = Flask(__name__) 
 
-#Caesar Cipher
+# Khởi tạo các đối tượng cipher
 caesar_cipher = CaesarCipher()
+vigenere_cipher = VigenereCipher()
+railfence_cipher = RailFenceCipher()
+transposition_cipher = TranspositionCipher()
+playfair_cipher = PlayFairCipher()
+
+# --- Caesar Cipher ---
 @app.route('/api/caesar/encrypt', methods=['POST'])
 def caesar_encrypt():
     data = request.get_json()
-    plain_text = data['plaintext']
-    key = data['key']
+    plain_text = data['plain_text'] 
+    key = int(data['key']) 
     encrypted_text = caesar_cipher.encrypt_text(plain_text, key)
-    return jsonify({'encrypted_message': encrypted_text})
+    return jsonify({'encrypted_text': encrypted_text})
 
 @app.route('/api/caesar/decrypt', methods=['POST'])
 def caesar_decrypt():
     data = request.get_json()
     cipher_text = data['cipher_text']
-    key = data['key']
+    key = int(data['key']) 
     decrypted_text = caesar_cipher.decrypt_text(cipher_text, key)
-    return jsonify({'decrypted_message': decrypted_text})
-
-
-
-
-
+    
+    return jsonify({'decrypted_text': decrypted_text})
 
 #Vigenere Cipher
 vigenere_cipher = VigenereCipher()
@@ -50,9 +52,6 @@ def vigenere_decrypt():
 
 
 
-
-
-
 #Railfence Cipher
 railfence_cipher = RailFenceCipher()
 @app.route('/api/railfence/encrypt', methods=['POST'])
@@ -70,8 +69,6 @@ def railfence_decrypt():
     key = int(data['key'])
     decrypted_text = railfence_cipher.rail_fence_decrypt(cipher_text, key)
     return jsonify({'decrypted_text': decrypted_text})
-
-
 
 
 
@@ -126,6 +123,5 @@ def playfair_decrypt():
     decrypted_text = playfair_cipher.playfair_decrypt(cipher_text, playfair_matrix)
     return jsonify({'decrypted_text': decrypted_text})
 
-# BỔ SUNG: Khởi chạy ứng dụng Flask Server
 if __name__ == '__main__':
     app.run(host='127.0.0.1', port=5000, debug=True)
